@@ -2,7 +2,7 @@
 
 A self-hosted agent workspace with a web interface.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 Uses separate client and host tokens. The launcher downloads its release-tested OpenCode engine at first startup. The Electron shell and Den control plane are absent; upstream web mode retains automatic approval.
 

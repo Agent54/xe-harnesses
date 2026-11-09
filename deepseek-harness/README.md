@@ -2,7 +2,7 @@
 
 A web-based coding agent harness.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 Launch-token and session authentication remain enabled. Upstream requires a concrete container interface and secure-cookie handling at the HTTPS proxy.
 

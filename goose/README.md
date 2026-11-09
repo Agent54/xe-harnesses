@@ -2,7 +2,7 @@
 
 A terminal agent for development tasks.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 Terminal-only; the native desktop shell is absent.
 

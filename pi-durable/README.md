@@ -2,7 +2,7 @@
 
 A durable coding-agent runtime exposed through an HTTP API.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 A small custom host wraps the upstream library with coding tools and a Node execution environment. Provides one shared conversation, bearer-authenticated submissions, and SQLite checkpoints. There is no browser UI; health checks are unauthenticated.
 

@@ -2,7 +2,7 @@
 
 A browser interface for the OpenCode coding agent.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 The pinned OpenAI browser OAuth flow uses fixed container-local callbacks. Device-code and API-key authentication are supported independently of the app origin.
 

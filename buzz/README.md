@@ -2,7 +2,7 @@
 
 Agent messaging with a web client and relay.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 Includes PostgreSQL, Redis, and S3 storage. The optional agent profile includes Goose and retains upstream owner-only authorization.
 

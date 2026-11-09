@@ -1,6 +1,6 @@
 # Xe harnesses
 
-Agent apps for **Xe Computer**, listed in the [Xe Appstore](https://github.com/Agent54/xe-appstore) under `agent`. These Compose definitions are Xe Computer integration assets, not standalone deployments. They should not be used directly or outside Xe Computer.
+Agent apps for **Xe Computer**, listed in the [Xe Appstore](https://github.com/Agent54/xe-appstore) under `agents`. These Compose definitions are Xe Computer integration assets, not standalone deployments. They should not be used directly or outside Xe Computer.
 
 - [AionUI](aionui/README.md)
 - [Buzz](buzz/README.md)

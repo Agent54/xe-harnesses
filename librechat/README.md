@@ -2,7 +2,7 @@
 
 A chat interface for multiple model providers.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 Includes MongoDB. Optional search, RAG/vector database, and admin-panel services are absent.
 

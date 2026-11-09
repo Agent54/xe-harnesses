@@ -2,7 +2,7 @@
 
 A web coding workspace with an integrated agent.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 Runs without Electron. Vendor OAuth has independent registered callback restrictions; the public app origin does not override them.
 

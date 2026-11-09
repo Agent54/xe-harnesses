@@ -2,7 +2,7 @@
 
 A web workspace for coding agents, projects, terminals, and reviews.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 Includes Codex, OpenCode, Pi, Git, GitHub CLI, SSH, Python, and ripgrep. Desktop-only integrations and host browser access are absent. Browser-facing URLs derive from request metadata.
 

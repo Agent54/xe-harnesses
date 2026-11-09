@@ -2,7 +2,7 @@
 
 Qwen's coding agent with a browser shell.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 Uses bearer-token authentication and explicit origin allowance. The upstream mobile pairing QR flow does not infer HTTPS behind a TLS proxy.
 

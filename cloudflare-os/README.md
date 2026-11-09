@@ -2,7 +2,7 @@
 
 An AI workspace running the upstream local development runtime.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 Uses Wrangler/workerd. A pinned source patch maps gatekeeper URLs to the Xe-provided public origin. This is not the upstream production deployment.
 

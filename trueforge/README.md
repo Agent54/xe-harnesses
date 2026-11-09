@@ -2,7 +2,7 @@
 
 An agent workspace with model and tool integrations.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 Uses standalone SQLite mode. A pinned bundle patch honors the public origin. Local Docker sandboxes cannot access the host engine because its socket is absent.
 

@@ -2,7 +2,7 @@
 
 Agent WebUI backed by AionCore.
 
-This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agents` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
 Includes Codex; native Electron and desktop browser integrations are absent.
 
