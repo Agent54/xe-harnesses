@@ -1,0 +1,45 @@
+name: harness-librechat
+services:
+  librechat:
+    build: .
+    init: true
+    logging:
+      driver: local
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    ports: ["127.0.0.1:3081:3080"]
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/LibreChat
+      PUBLIC_URL: ${PUBLIC_URL:-https://librechat_harness-librechat.app.localhost}
+      DOMAIN_CLIENT: ${PUBLIC_URL:-https://librechat_harness-librechat.app.localhost}
+      DOMAIN_SERVER: ${PUBLIC_URL:-https://librechat_harness-librechat.app.localhost}
+      TRUST_PROXY: ${TRUST_PROXY:-1}
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:?Set JWT_REFRESH_SECRET}
+      CREDS_KEY: ${CREDS_KEY:?Set CREDS_KEY to 64 hex characters}
+      CREDS_IV: ${CREDS_IV:?Set CREDS_IV to 32 hex characters}
+      ALLOW_EMAIL_LOGIN: "true"
+      ALLOW_REGISTRATION: "true"
+      SEARCH: "false"
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-user_provided}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-user_provided}
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    stop_grace_period: 30s
+  mongodb:
+    build:
+      context: .
+      dockerfile: mongodb.Dockerfile
+    init: true
+    logging:
+      driver: local
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: [CMD, mongosh, --quiet, --eval, "quit(db.adminCommand('ping').ok ? 0 : 1)"]
+      interval: 10s
+      timeout: 5s
+      start_period: 30s

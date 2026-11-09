@@ -1,0 +1,22 @@
+name: harness-aionui
+services:
+  aionui:
+    build: .
+    init: true
+    logging:
+      driver: local
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    ports: ["127.0.0.1:25808:25808"]
+    environment:
+      PUBLIC_URL: ${PUBLIC_URL:-https://aionui_harness-aionui.app.localhost}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:25808/api/auth/status').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 90s
+    stop_grace_period: 30s

@@ -1,0 +1,5 @@
+*
+!Dockerfile
+!*.Dockerfile
+!server.mjs
+!public-origin.patch

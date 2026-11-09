@@ -1,0 +1,12 @@
+--- a/scripts/run-dev-server.ts
++++ b/scripts/run-dev-server.ts
+@@ -531,7 +531,8 @@
+   const config = parse(readFileSync(srcPath, "utf8"));
+   config.build = devBuildConfig(config.build, gk.dir);
+   config.vars = config.vars || {};
+-  config.vars.BASE_URL = `http://${backendHost}/gatekeeper/${gk.name.slice("gatekeeper-".length)}`;
++  const publicOrigin = process.env.PUBLIC_BASE_URL?.replace(/\/+$/, "") || `http://${backendHost}`;
++  config.vars.BASE_URL = `${publicOrigin}/gatekeeper/${gk.name.slice("gatekeeper-".length)}`;
+ 
+   const shared = SHARED_GATEKEEPER_CREDS[gk.name];
+   if (shared && process.env[shared.id] && process.env[shared.secret]) {

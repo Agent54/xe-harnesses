@@ -1,0 +1,17 @@
+name: harness-goose
+services:
+  goose:
+    build: .
+    init: true
+    logging:
+      driver: local
+    stdin_open: true
+    tty: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    environment:
+      GOOSE_PROVIDER: ${GOOSE_PROVIDER:-openai}
+      GOOSE_MODEL: ${GOOSE_MODEL:?Set GOOSE_MODEL for the selected GOOSE_PROVIDER}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    # Interactive CLI: docker compose run --rm goose

@@ -1,0 +1,127 @@
+name: harness-buzz
+x-common: &common
+  init: true
+  restart: unless-stopped
+  cap_drop: [ALL]
+  security_opt: ['no-new-privileges:true']
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: '3'
+services:
+  relay:
+    <<: *common
+    build:
+      context: .
+      target: relay
+    ports: ['127.0.0.1:3031:3000']
+    entrypoint: [/bin/sh, -ec]
+    command:
+      - >-
+        public_origin="$$(node -e 'const u = new URL(process.env.PUBLIC_URL); if (!["http:","https:"].includes(u.protocol) || u.pathname !== "/" || u.search || u.hash || u.username || u.password) throw new Error("PUBLIC_URL must be an HTTP(S) origin"); process.stdout.write(u.origin)')";
+        case "$$public_origin" in https://*) RELAY_URL="wss://$${public_origin#https://}" ;; http://*) RELAY_URL="ws://$${public_origin#http://}" ;; esac;
+        export RELAY_URL;
+        export BUZZ_CORS_ORIGINS="$${BUZZ_CORS_ORIGINS:-$$public_origin}";
+        exec buzz-relay
+    environment:
+      BUZZ_BIND_ADDR: 0.0.0.0:3000
+      BUZZ_HEALTH_PORT: '8080'
+      PUBLIC_URL: ${PUBLIC_URL:-https://relay_harness-buzz.app.localhost}
+      BUZZ_CORS_ORIGINS: ${BUZZ_CORS_ORIGINS:-}
+      BUZZ_RELAY_PRIVATE_KEY: ${BUZZ_RELAY_PRIVATE_KEY:?Set a 32-byte hex BUZZ_RELAY_PRIVATE_KEY}
+      BUZZ_GIT_HOOK_HMAC_SECRET: ${BUZZ_GIT_HOOK_HMAC_SECRET:?Set BUZZ_GIT_HOOK_HMAC_SECRET}
+      DATABASE_URL: postgres://buzz:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}@postgres:5432/buzz
+      REDIS_URL: redis://:${REDIS_PASSWORD:?Set REDIS_PASSWORD}@redis:6379
+      BUZZ_S3_ENDPOINT: http://object-store:9000
+      BUZZ_S3_ADDRESSING_STYLE: path
+      BUZZ_S3_ACCESS_KEY: ${BUZZ_S3_ACCESS_KEY:?Set BUZZ_S3_ACCESS_KEY}
+      BUZZ_S3_SECRET_KEY: ${BUZZ_S3_SECRET_KEY:?Set BUZZ_S3_SECRET_KEY}
+      BUZZ_S3_BUCKET: buzz-media
+      BUZZ_S3_REGION: us-east-1
+      BUZZ_GIT_REPO_PATH: /data/git
+      BUZZ_AUTO_MIGRATE: 'true'
+      BUZZ_PUSH_ENABLED: 'false'
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      object-store-init: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD, curl, -fsS, 'http://127.0.0.1:8080/_readiness']
+      interval: 15s
+      timeout: 5s
+      start_period: 60s
+    stop_grace_period: 30s
+  postgres:
+    <<: *common
+    build:
+      context: .
+      dockerfile: postgres.Dockerfile
+    environment:
+      POSTGRES_DB: buzz
+      POSTGRES_USER: buzz
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    healthcheck:
+      test: [CMD, pg_isready, -U, buzz, -d, buzz]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+  redis:
+    <<: *common
+    build:
+      context: .
+      dockerfile: redis.Dockerfile
+    command: [--appendonly, 'yes', --requirepass, '${REDIS_PASSWORD:?Set REDIS_PASSWORD}']
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD:?Set REDIS_PASSWORD}
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+  object-store:
+    <<: *common
+    build:
+      context: .
+      dockerfile: object-store.Dockerfile
+    environment:
+      MINIO_ROOT_USER: ${BUZZ_S3_ACCESS_KEY:?Set BUZZ_S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${BUZZ_S3_SECRET_KEY:?Set BUZZ_S3_SECRET_KEY}
+    healthcheck:
+      test: [CMD, curl, -fsS, 'http://127.0.0.1:9000/minio/health/live']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+  object-store-init:
+    <<: *common
+    restart: 'no'
+    build:
+      context: .
+      dockerfile: object-store.Dockerfile
+    entrypoint: [/bin/sh, -ec]
+    command:
+      - >-
+        mc alias set local http://object-store:9000 "$$BUZZ_S3_ACCESS_KEY" "$$BUZZ_S3_SECRET_KEY";
+        mc mb --ignore-existing local/buzz-media;
+        mc anonymous set none local/buzz-media
+    environment:
+      BUZZ_S3_ACCESS_KEY: ${BUZZ_S3_ACCESS_KEY:?Set BUZZ_S3_ACCESS_KEY}
+      BUZZ_S3_SECRET_KEY: ${BUZZ_S3_SECRET_KEY:?Set BUZZ_S3_SECRET_KEY}
+    depends_on:
+      object-store: {condition: service_healthy}
+  agent:
+    <<: *common
+    profiles: [agent]
+    build:
+      context: .
+      target: agent
+    environment:
+      BUZZ_PRIVATE_KEY: ${BUZZ_PRIVATE_KEY:-}
+      BUZZ_RELAY_URL: ws://relay:3000
+      BUZZ_ACP_RESPOND_TO: owner-only
+      GOOSE_PROVIDER: ${GOOSE_PROVIDER:-openai}
+      GOOSE_MODEL: ${GOOSE_MODEL:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    depends_on:
+      relay: {condition: service_healthy}

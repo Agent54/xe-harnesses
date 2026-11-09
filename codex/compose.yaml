@@ -1,0 +1,14 @@
+name: harness-codex
+services:
+  codex:
+    build: .
+    init: true
+    logging:
+      driver: local
+    stdin_open: true
+    tty: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    # Interactive CLI: docker compose run --rm codex

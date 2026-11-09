@@ -1,0 +1,25 @@
+name: harness-opencode-2
+services:
+  opencode:
+    build: .
+    init: true
+    logging:
+      driver: local
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    ports: ["127.0.0.1:4096:4096"]
+    environment:
+      # Agent/tool context; the browser UI itself uses the request origin.
+      PUBLIC_URL: ${PUBLIC_URL:-https://opencode_harness-opencode-2.app.localhost}
+      OPENCODE_SERVER_PASSWORD: ${OPENCODE_SERVER_PASSWORD:?Set OPENCODE_SERVER_PASSWORD}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    command:
+      - serve
+      - --hostname
+      - 0.0.0.0
+      - --port
+      - "4096"
+      - --cors
+      - ${PUBLIC_URL:-https://opencode_harness-opencode-2.app.localhost}

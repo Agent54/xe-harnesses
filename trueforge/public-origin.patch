@@ -1,0 +1,11 @@
+--- a/node_modules/@truefoundry/trueforge/dist/main.js
++++ b/node_modules/@truefoundry/trueforge/dist/main.js
+@@ -643,7 +643,7 @@
+ function effectivePublicBaseUrl(config) {
+-  if (config.STANDALONE && config.NODE_ENV !== "development") {
++  if (config.STANDALONE && config.NODE_ENV !== "development" && config.PUBLIC_BASE_URL === "") {
+     return `http://localhost:${String(config.PORT)}`;
+   }
+   return config.PUBLIC_BASE_URL;
+ }
+ function getPublicBaseUrl(config = configuration) {

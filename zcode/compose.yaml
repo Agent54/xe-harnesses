@@ -1,0 +1,15 @@
+name: harness-zcode
+services:
+  zcode:
+    build: .
+    init: true
+    logging:
+      driver: local
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    ports: ["127.0.0.1:3030:3030"]
+    environment:
+      PUBLIC_URL: ${PUBLIC_URL:-https://zcode_harness-zcode.app.localhost}
+      ZCODE_TOKEN: ${ZCODE_TOKEN:-}
+    stop_grace_period: 30s

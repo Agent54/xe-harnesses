@@ -1,0 +1,17 @@
+name: harness-openchamber
+services:
+  openchamber:
+    build: .
+    init: true
+    logging:
+      driver: local
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    ports: ["127.0.0.1:3000:3000"]
+    environment:
+      PUBLIC_URL: ${PUBLIC_URL:-https://openchamber_harness-openchamber.app.localhost}
+      OPENCHAMBER_LAN_URL: ${PUBLIC_URL:-https://openchamber_harness-openchamber.app.localhost}
+      OPENCHAMBER_UI_PASSWORD: ${OPENCHAMBER_UI_PASSWORD:?Set OPENCHAMBER_UI_PASSWORD}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}

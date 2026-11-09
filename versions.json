@@ -1,0 +1,25 @@
+{
+  "verifiedOn": "2026-11-04",
+  "policy": "Newest stable harness release; newest published preview when no stable release exists. Cloudflare OS has no releases and is commit-pinned. Supporting runtimes/datastores stay on upstream-compatible branches.",
+  "harnesses": {
+    "t3-code": { "version": "0.1.7", "release": "https://github.com/pingdotgg/t3code/releases/tag/v0.1.7" },
+    "codex": { "version": "0.166.0", "release": "https://github.com/openai/codex/releases/tag/rust-v0.166.0" },
+    "opencode-2": { "version": "2.2.5", "release": "https://github.com/anomalyco/opencode/releases/tag/v2.2.5" },
+    "cloudflare-os": { "version": null, "commit": "a3ba4746b58f1ef8e2252f8bac6b6377099202f0", "releases": "https://github.com/cloudflare/cloudflare-os/releases", "source": "https://github.com/cloudflare/cloudflare-os/commit/a3ba4746b58f1ef8e2252f8bac6b6377099202f0" },
+    "openchamber": { "version": "2.6.1", "release": "https://github.com/openchamber/openchamber/releases/tag/v2.6.1" },
+    "qwen-code": { "version": "0.26.7", "release": "https://github.com/QwenLM/qwen-code/releases/tag/v0.26.7" },
+    "deepseek-harness": { "version": "0.2.2-alpha.3", "preview": true, "release": "https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.2-alpha.3" },
+    "buzz": { "version": "0.5.28", "release": "https://github.com/block/buzz/releases/tag/desktop-v0.5.28" },
+    "pi": { "version": "1.5.0", "verifiedOn": "2026-11-08", "release": "https://github.com/earendil-works/pi/releases/tag/v1.5.0" },
+    "pi-durable": { "version": "1.5.0", "experimental": true, "release": "https://github.com/earendil-works/pi/releases/tag/v1.5.0" },
+    "kimi-code": { "version": "2.5.2", "verifiedOn": "2026-11-08", "release": "https://github.com/MoonshotAI/kimi-code/releases/tag/%40moonshot-ai/kimi-code%402.5.2" },
+    "paseo": { "version": "0.15.0", "release": "https://github.com/getpaseo/paseo/releases/tag/v0.15.0" },
+    "trueforge": { "version": "0.183.0", "release": "https://github.com/truefoundry/trueforge/releases/tag/%40truefoundry/trueforge%400.183.0" },
+    "get-bb": { "version": "0.48.1", "release": "https://github.com/get-bb/bb/releases/tag/desktop-v0.48.1" },
+    "librechat": { "version": "0.8.9-rc1", "preview": true, "release": "https://github.com/danny-avila/LibreChat/releases/tag/v0.8.9-rc1" },
+    "goose": { "version": "1.57.0", "release": "https://github.com/aaif-goose/goose/releases/tag/v1.57.0" },
+    "zcode": { "version": "3.17.1", "release": "https://github.com/zai-org/ZCode/releases/tag/v3.17.1" },
+    "openwork": { "version": "0.18.64", "release": "https://github.com/different-ai/openwork/releases/tag/v0.18.64" },
+    "aionui": { "version": "2.2.2", "release": "https://github.com/iOfficeAI/AionUi/releases/tag/v2.2.2" }
+  }
+}

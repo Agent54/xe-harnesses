@@ -1,0 +1,17 @@
+name: harness-get-bb
+services:
+  bb:
+    build: .
+    init: true
+    logging:
+      driver: local
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    ports: ["127.0.0.1:38886:38886"]
+    environment:
+      PUBLIC_URL: ${PUBLIC_URL:-https://bb_harness-get-bb.app.localhost}
+      BB_APP_URL: ${PUBLIC_URL:-https://bb_harness-get-bb.app.localhost}
+      BB_EXTERNAL_URL: ${PUBLIC_URL:-https://bb_harness-get-bb.app.localhost}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GH_TOKEN: ${GH_TOKEN:-}

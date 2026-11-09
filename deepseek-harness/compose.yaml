@@ -1,0 +1,14 @@
+name: harness-deepseek
+services:
+  deepseek:
+    build: .
+    init: true
+    logging:
+      driver: local
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    ports: ["127.0.0.1:3080:3080"]
+    environment:
+      PUBLIC_URL: ${PUBLIC_URL:-https://deepseek_harness-deepseek.app.localhost}
+    stop_grace_period: 30s

@@ -1,0 +1,23 @@
+name: harness-cloudflare-os
+services:
+  cloudflare-os:
+    build: .
+    init: true
+    logging:
+      driver: local
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    ports: ["127.0.0.1:8787:8788"]
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PUBLIC_URL: ${PUBLIC_URL:-https://cloudflare-os_harness-cloudflare-os.app.localhost}
+      PUBLIC_BASE_URL: ${PUBLIC_URL:-https://cloudflare-os_harness-cloudflare-os.app.localhost}
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:8788/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 180s
+    stop_grace_period: 30s

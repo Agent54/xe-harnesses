@@ -1,0 +1,32 @@
+name: harness-qwen-code
+services:
+  qwen-code:
+    build: .
+    init: true
+    logging:
+      driver: local
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    ports: ["127.0.0.1:4170:4170"]
+    environment:
+      PUBLIC_URL: ${PUBLIC_URL:-https://qwen-code_harness-qwen-code.app.localhost}
+      QWEN_SERVER_TOKEN: ${QWEN_SERVER_TOKEN:?Set QWEN_SERVER_TOKEN}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://dashscope.aliyuncs.com/compatible-mode/v1}
+      OPENAI_MODEL: ${OPENAI_MODEL:-qwen3-coder-plus}
+    command:
+      - serve
+      - --hostname
+      - 0.0.0.0
+      - --port
+      - "4170"
+      - --workspace
+      - /workspace
+      - --require-auth
+      - --allow-origin
+      - ${PUBLIC_URL:-https://qwen-code_harness-qwen-code.app.localhost}
+      - --allow-origin
+      - http://localhost:4170
+      - --allow-origin
+      - http://127.0.0.1:4170
