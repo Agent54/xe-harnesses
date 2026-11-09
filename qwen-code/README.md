@@ -1,17 +1,11 @@
-# Qwen Code behind a proxy
+# Qwen Code
 
-Open [https://qwen-code_harness-qwen-code.app.localhost](https://qwen-code_harness-qwen-code.app.localhost), or set `PUBLIC_URL` in `.env` to the external origin you use. Compose passes that exact origin to `qwen serve --allow-origin`; the pinned release requires this explicit allowance for HTTPS reverse proxies and terminal/voice WebSockets. Local direct access on port 4170 remains allowed.
+Qwen's coding agent with a browser shell.
 
-Supply `QWEN_SERVER_TOKEN` and enter it in the Web Shell's connection screen. Preserve the proxy's external `Host` and forward WebSocket upgrades. Qwen [deliberately does not trust forwarded headers to infer same-origin](https://github.com/QwenLM/qwen-code/blob/v0.26.7/docs/users/qwen-serve.md), so `--allow-origin` is the relevant setting rather than a made-up proxy-trust flag.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
-Qwen's mobile pairing QR uses the backend's HTTP scheme and does not infer HTTPS from a TLS-terminating proxy. For this setup, enter the existing bearer token at the HTTPS origin instead of using that QR exchange. Provider authentication has separate rules; use the supported device-code flow where a fixed loopback callback cannot reach the container.
+Uses bearer-token authentication and explicit origin allowance. The upstream mobile pairing QR flow does not infer HTTPS behind a TLS proxy.
 
-The container stays non-root and mount-free. Recreating it removes credentials, projects, and session state.
+Upstream pin: [0.26.7](https://github.com/QwenLM/qwen-code/releases/tag/v0.26.7). Source verification date: 2026-11-04.
 
-## Version and entry point
-
-Pin: [0.26.7](https://github.com/QwenLM/qwen-code/releases/tag/v0.26.7). Entry: [HTTPS app](https://qwen-code_harness-qwen-code.app.localhost) · [direct:4170](http://localhost:4170).
-
-See [versions.json](../versions.json) for source verification dates.
-
-set the UI password or bearer token from `.env.example`. Qwen's browser connection screen accepts `QWEN_SERVER_TOKEN`. Paseo and bb include the pinned Codex provider; other provider CLIs can be added in their Dockerfiles.
+State is held in the container's writable layer and is lost when the container is removed or recreated. Image builds and end-to-end provider flows have not been comprehensively validated.

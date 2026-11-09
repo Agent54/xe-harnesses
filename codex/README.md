@@ -1,23 +1,11 @@
-# codex
+# Codex
 
-## Version and entry point
+OpenAI's terminal coding agent.
 
-Pin: [0.166.0](https://github.com/openai/codex/releases/tag/rust-v0.166.0). Entry: CLI.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
-See [versions.json](../versions.json) for source verification dates.
+Terminal-only. The upstream sandbox is retained; compatibility depends on the host's nested-sandbox support.
 
-## Start
+Upstream pin: [0.166.0](https://github.com/openai/codex/releases/tag/rust-v0.166.0). Source verification date: 2026-11-04.
 
-```sh
-docker compose build
-docker compose run --rm codex
-# Keep a reusable container:
-docker compose up -d
-docker compose attach codex
-```
-
-Detach with `Ctrl-P`, `Ctrl-Q`. Projects belong in `/workspace`. Restarting keeps state; recreation, removal, and `run --rm` delete it. No ports or mounts are exposed.
-
-Sign in within the terminal, or use `docker compose exec codex codex login --device-auth`. Alternatively set `OPENAI_API_KEY` in `.env`.
-
-Codex's inner Linux sandbox may require user namespaces that a Docker host disables. These files retain the upstream sandbox and Docker defaults instead of granting extra capabilities or disabling seccomp. If your host prevents it from starting, review that host's nested-sandbox support before changing permissions.
+State is held in the container's writable layer and is lost when the container is removed or recreated. Image builds and end-to-end provider flows have not been comprehensively validated.

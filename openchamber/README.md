@@ -1,15 +1,11 @@
-# OpenChamber behind a proxy
+# OpenChamber
 
-The default public address is [https://openchamber_harness-openchamber.app.localhost](https://openchamber_harness-openchamber.app.localhost). Set `PUBLIC_URL` in `.env` to change it. Compose supplies it as the upstream `OPENCHAMBER_LAN_URL`, which [advertises the reachable address instead of the container's bridge IP](https://github.com/openchamber/openchamber/blob/v2.6.1/packages/web/server/lib/security/bind-host.js).
+A browser workspace for coding agents.
 
-Preserve the external `Host`, set `X-Forwarded-Host` and `X-Forwarded-Proto: https`, and forward WebSocket upgrades. The upstream [request-origin checks](https://github.com/openchamber/openchamber/blob/v2.6.1/packages/web/server/lib/security/request-security.js) accept the matching request or forwarded host. Configure `OPENCHAMBER_UI_PASSWORD` before starting the stack. The service still listens on `0.0.0.0:3000` internally.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
-This address configuration does not override an OAuth provider's registered loopback redirect. Choose device-code authentication where offered, or use an API key when operating without a reachable callback listener. There are no mounts; state is lost on recreation.
+Uses upstream UI password authentication and request-origin checks.
 
-## Version and entry point
+Upstream pin: [2.6.1](https://github.com/openchamber/openchamber/releases/tag/v2.6.1). Source verification date: 2026-11-04.
 
-Pin: [2.6.1](https://github.com/openchamber/openchamber/releases/tag/v2.6.1). Entry: [HTTPS app](https://openchamber_harness-openchamber.app.localhost) · [direct:3000](http://localhost:3000).
-
-See [versions.json](../versions.json) for source verification dates.
-
-set the UI password or bearer token from `.env.example`. Qwen's browser connection screen accepts `QWEN_SERVER_TOKEN`. Paseo and bb include the pinned Codex provider; other provider CLIs can be added in their Dockerfiles.
+State is held in the container's writable layer and is lost when the container is removed or recreated. Image builds and end-to-end provider flows have not been comprehensively validated.

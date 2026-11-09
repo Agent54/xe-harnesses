@@ -1,23 +1,11 @@
-# goose
+# Goose
 
-## Version and entry point
+A terminal agent for development tasks.
 
-Pin: [1.57.0](https://github.com/aaif-goose/goose/releases/tag/v1.57.0). Entry: CLI.
+This app is an **Xe Computer integration**, distributed through the Xe Appstore's `agent` category. Its Compose definition is not intended for direct use or deployment outside Xe Computer.
 
-See [versions.json](../versions.json) for source verification dates.
+Terminal-only; the native desktop shell is absent.
 
-choose a provider/model with `goose configure`, or set `GOOSE_PROVIDER`, `GOOSE_MODEL`, and the provider API key. The native desktop shell is not included.
+Upstream pin: [1.57.0](https://github.com/aaif-goose/goose/releases/tag/v1.57.0). Source verification date: 2026-11-04.
 
-## Start
-
-Copy `.env.example` to `.env` and supply the required model and provider credentials.
-
-```sh
-docker compose build
-docker compose run --rm goose
-# Keep a reusable container:
-docker compose up -d
-docker compose attach goose
-```
-
-Detach with `Ctrl-P`, `Ctrl-Q`. Projects belong in `/workspace`. Restarting keeps state; recreation, removal, and `run --rm` delete it. No ports or mounts are exposed.
+State is held in the container's writable layer and is lost when the container is removed or recreated. Image builds and end-to-end provider flows have not been comprehensively validated.
