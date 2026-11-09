@@ -15,8 +15,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Provider installers and managed runtimes remain writable by the service user.
 ENV NPM_CONFIG_PREFIX=/home/node/.local
 ENV PATH=/home/node/.local/bin:${PATH}
+COPY --chown=node:node server.mjs /opt/t3-code/server.mjs
 USER node
 WORKDIR /workspace
 EXPOSE 3773
-ENTRYPOINT ["t3"]
-CMD ["serve", "--host", "0.0.0.0", "--port", "3773"]
+ENTRYPOINT ["node", "/opt/t3-code/server.mjs"]
